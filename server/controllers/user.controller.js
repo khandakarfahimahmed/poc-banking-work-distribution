@@ -111,3 +111,44 @@ exports.addTask = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+///////task info/////////
+
+exports.addTaskInfo = async (req, res) => {
+  try {
+    const {
+      account_type,
+      customer_name,
+      customer_dob,
+      customer_address,
+      customer_phone,
+      customer_occupation,
+    } = req.body;
+    const task = await models.postTaskInfo({
+      account_type,
+      customer_name,
+      customer_dob,
+      customer_address,
+      customer_phone,
+      customer_occupation,
+    });
+    if (!task) {
+      return res.status(404).json({ message: "Problem adding task" });
+    }
+    res.status(200).json({ task });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getAllTaskInfo = async (req, res) => {
+  try {
+    const tasks = await models.findAllTaskInfo();
+    if (!tasks) {
+      return res.status(404).json({ message: "Tasks not found" });
+    }
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

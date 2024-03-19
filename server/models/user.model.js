@@ -74,6 +74,39 @@ const Tasks = sequelize.define(
   }
 );
 
+const TaskInfo = sequelize.define(
+  "TaskInfo",
+  {
+    task_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    account_type: { type: DataTypes.STRING, allowNull: false },
+    customer_name: { type: DataTypes.STRING, allowNull: false },
+    customer_dob: { type: DataTypes.STRING, allowNull: false },
+    customer_address: { type: DataTypes.STRING, allowNull: false },
+    customer_phone: { type: DataTypes.STRING, allowNull: false },
+    customer_occupation: { type: DataTypes.STRING, allowNull: false },
+
+    assigned_to: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "null", // Set default value to "not done"
+    },
+
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "pending", // Set default value to "not done"
+    },
+  },
+  {
+    timestamps: true,
+    tableName: "task_info",
+  }
+);
+
 (async () => {
   try {
     await sequelize.sync();
@@ -82,4 +115,4 @@ const Tasks = sequelize.define(
     console.error("Error synchronizing database:", error);
   }
 })();
-module.exports = { User, sequelize, Tasks };
+module.exports = { User, sequelize, Tasks, TaskInfo };

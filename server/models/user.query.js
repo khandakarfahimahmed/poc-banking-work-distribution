@@ -1,4 +1,4 @@
-const { User, Tasks } = require("./user.model");
+const { User, Tasks, TaskInfo } = require("./user.model");
 exports.postOne = async (info) => {
   try {
     const data = {
@@ -36,6 +36,7 @@ exports.findAlluser = async () => {
   }
 };
 
+///////////////////////Task table queries////////////////////////
 exports.findOneUser = async (info) => {
   try {
     const user = await User.findOne({
@@ -92,3 +93,32 @@ function assign_task(task_name, email) {
     { where: { task_name: task_name } }
   );
 }
+
+///////////////////////Task-Info table queries////////////////////////
+exports.postTaskInfo = async (info) => {
+  try {
+    const task = await TaskInfo.create({
+      account_type: info.account_type,
+      customer_name: info.customer_name,
+      customer_dob: info.customer_dob,
+      customer_address: info.customer_address,
+      customer_phone: info.customer_phone,
+      customer_occupation: info.customer_occupation,
+    });
+    return task;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error adding new Task-Info to DB.");
+  }
+};
+
+exports.findAllTasksInfo = async () => {
+  try {
+    const tasks = await TaskInfo.findAll({});
+
+    return tasks;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error finding Task-Info from DB.");
+  }
+};
