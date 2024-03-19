@@ -1,0 +1,28 @@
+/* task-list.component.css */
+
+.task-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.task-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.task-row {
+  display: table-row;
+}
+
+.task-header {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.task-cell {
+  display: table-cell;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
