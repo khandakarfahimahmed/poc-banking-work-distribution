@@ -21,10 +21,11 @@ router.post("/dashboard", userController.verifyToken, (req, res) => {
         authData: authData,
       });
     }
-    // If token is valid, you can proceed with dashboard logic here
   });
 });
 router.get("/tasks", userController.getAllTasks);
 router.post("/tasks", userController.addTask);
+router.post("/taskinfo", userController.addTaskInfo);
+router.get("/taskinfo", userController.getAllTaskInfo);
 
 module.exports = router;

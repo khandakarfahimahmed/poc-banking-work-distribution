@@ -112,7 +112,7 @@ exports.postTaskInfo = async (info) => {
   }
 };
 
-exports.findAllTasksInfo = async () => {
+exports.getAllTaskInfo = async () => {
   try {
     const tasks = await TaskInfo.findAll({});
 

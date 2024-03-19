@@ -102,7 +102,7 @@ exports.getAllTasks = async (req, res) => {
 exports.addTask = async (req, res) => {
   try {
     const { task_name } = req.body;
-    const task = await models.postTask({ task_name, status: "not done" });
+    const task = await models.postTask({ task_name });
     if (!task) {
       return res.status(404).json({ message: "Problem adding task" });
     }
@@ -124,7 +124,7 @@ exports.addTaskInfo = async (req, res) => {
       customer_phone,
       customer_occupation,
     } = req.body;
-    const task = await models.postTaskInfo({
+    const taskinfo = await models.postTaskInfo({
       account_type,
       customer_name,
       customer_dob,
@@ -132,10 +132,10 @@ exports.addTaskInfo = async (req, res) => {
       customer_phone,
       customer_occupation,
     });
-    if (!task) {
+    if (!taskinfo) {
       return res.status(404).json({ message: "Problem adding task" });
     }
-    res.status(200).json({ task });
+    res.status(200).json({ taskinfo });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -143,11 +143,11 @@ exports.addTaskInfo = async (req, res) => {
 
 exports.getAllTaskInfo = async (req, res) => {
   try {
-    const tasks = await models.findAllTaskInfo();
-    if (!tasks) {
+    const taskinfo = await models.getAllTaskInfo();
+    if (!taskinfo) {
       return res.status(404).json({ message: "Tasks not found" });
     }
-    res.status(200).json({ tasks });
+    res.status(200).json({ taskinfo });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
