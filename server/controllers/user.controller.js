@@ -73,20 +73,6 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-// exports.verifyToken = (req, res, next) => {
-//   const bearerHeader = req.headers["authorization"];
-//   if (!bearerHeader || typeof bearerHeader !== "string") {
-//     return res.status(401).json({ message: "Unauthorized" });
-//   } else {
-//     const bearer = bearerHeader.split(" ");
-//     if (bearer.length !== 2 || bearer[0] !== "Bearer") {
-//       return res.status(401).json({ message: "Invalid token format" });
-//     }
-//     const token = bearer[1];
-//     req.token = token;
-//     next();
-//   }
-// };
 exports.getAllTasks = async (req, res) => {
   try {
     const tasks = await models.findAllTasks();
@@ -101,8 +87,8 @@ exports.getAllTasks = async (req, res) => {
 
 exports.addTask = async (req, res) => {
   try {
-    const { task_name } = req.body;
-    const task = await models.postTask({ task_name });
+    const { task_type } = req.body;
+    const task = await models.postTask({ task_type });
     if (!task) {
       return res.status(404).json({ message: "Problem adding task" });
     }
@@ -148,6 +134,18 @@ exports.getAllTaskInfo = async (req, res) => {
       return res.status(404).json({ message: "Tasks not found" });
     }
     res.status(200).json({ taskinfo });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.distributeTasks = async (req, res) => {
+  try {
+    const tasks = await models.distributeTasks();
+    if (!tasks) {
+      return res.status(404).json({ message: "Tasks not found" });
+    }
+    res.status(200).json({ tasks });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

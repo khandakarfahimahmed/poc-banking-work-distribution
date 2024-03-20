@@ -27,5 +27,6 @@ router.get("/tasks", userController.getAllTasks);
 router.post("/tasks", userController.addTask);
 router.post("/taskinfo", userController.addTaskInfo);
 router.get("/taskinfo", userController.getAllTaskInfo);
+router.get("/taskinfo/distribute", userController.distributeTasks);
 
 module.exports = router;

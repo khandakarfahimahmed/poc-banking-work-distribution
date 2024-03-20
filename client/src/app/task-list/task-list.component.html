@@ -2,23 +2,23 @@
   <div class="task-table">
     <div class="task-row task-header">
       <div class="task-cell">Task ID</div>
-      <div class="task-cell">Task Name</div>
+      <div class="task-cell">Task Type</div>
       <div class="task-cell">Assigned To</div>
       <div class="task-cell">Assigned By</div>
       <div class="task-cell">Status</div>
-      <div class="task-cell">Created At</div>
-      <div class="task-cell">Updated At</div>
+      <!-- <div class="task-cell">Created At</div>
+      <div class="task-cell">Updated At</div> -->
     </div>
     <div class="task-row" *ngFor="let task of tasks">
       <div class="task-cell">{{ task.task_id }}</div>
-      <div class="task-cell">{{ task.task_name }}</div>
+      <div class="task-cell">{{ task.task_type }}</div>
       <div class="task-cell">{{ task.assigned_to }}</div>
       <div class="task-cell">{{ task.assigned_by }}</div>
       <div style="color: rgb(61, 182, 69)" class="task-cell">
         {{ task.status }}
       </div>
-      <div class="task-cell">{{ task.createdAt | date : "medium" }}</div>
-      <div class="task-cell">{{ task.updatedAt | date : "medium" }}</div>
+      <!-- <div class="task-cell">{{ task.createdAt | date : "medium" }}</div>
+      <div class="task-cell">{{ task.updatedAt | date : "medium" }}</div> -->
     </div>
   </div>
 </section>

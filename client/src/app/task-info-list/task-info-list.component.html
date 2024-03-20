@@ -1,0 +1,30 @@
+<section class="task-list-container">
+  <div class="task-table">
+    <!-- Header row -->
+    <div class="task-row task-header">
+      <div class="task-cell">Task ID</div>
+      <div class="task-cell">Account Type</div>
+      <div class="task-cell">Customer DOB</div>
+      <div class="task-cell">Customer Address</div>
+      <div class="task-cell">Customer Phone</div>
+      <div class="task-cell">Customer Occupation</div>
+      <div class="task-cell">Assigned To</div>
+      <div class="task-cell">Status</div>
+    </div>
+    <!-- Task rows -->
+    <div class="task-row" *ngFor="let task of taskinfo">
+      <div class="task-cell">{{ task.task_id }}</div>
+      <div class="task-cell">{{ task.account_type }}</div>
+      <div class="task-cell">
+        {{ task.customer_dob }}
+      </div>
+      <div class="task-cell">{{ task.customer_address }}</div>
+      <div class="task-cell">{{ task.customer_phone }}</div>
+      <div class="task-cell">{{ task.customer_occupation }}</div>
+      <div class="task-cell">{{ task.assigned_to }}</div>
+      <div class="task-cell" style="color: rgb(61, 182, 69)">
+        {{ task.status }}
+      </div>
+    </div>
+  </div>
+</section>

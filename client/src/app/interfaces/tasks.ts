@@ -1,6 +1,6 @@
 export interface Task {
   task_id: number;
-  task_name: string;
+  task_type: string;
   assigned_to: string;
   assigned_by: string;
   status: string;

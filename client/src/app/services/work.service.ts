@@ -14,4 +14,8 @@ export class WorkService {
   getTasks(): Observable<TasksResponse> {
     return this.http.get<TasksResponse>(this.url + 'tasks');
   }
+
+  getTaskInfo(): Observable<any> {
+    return this.http.get<any>(this.url + 'taskinfo');
+  }
 }

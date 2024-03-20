@@ -64,7 +64,7 @@ exports.findAllTasks = async () => {
 exports.postTask = async (info) => {
   try {
     const task = await Tasks.create({
-      task_name: info.task_name,
+      task_type: info.task_type,
     });
     return task;
   } catch (error) {
@@ -77,7 +77,7 @@ exports.updateTask = async (info) => {
   try {
     const task = await Tasks.update(
       { status: info.status },
-      { where: { task_name: info.task_name } }
+      { where: { task_type: info.task_type } }
     );
     return task;
   } catch (error) {
@@ -122,3 +122,22 @@ exports.getAllTaskInfo = async () => {
     throw new Error("Error finding Task-Info from DB.");
   }
 };
+////////algo//////
+////////algo//////
+const threshold = 2; // in hours
+
+async function distributeTasks() {
+  try {
+    const employees = await User.findAll({
+      where: { role: ["reviewer"] },
+    });
+    const tasks = await Tasks.findAll({});
+
+    for (let i = 0; i < employees.length; i++) {}
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Call the distributeTasks function
+distributeTasks();

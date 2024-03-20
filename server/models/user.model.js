@@ -1,8 +1,21 @@
+require("dotenv").config();
+
 const { Sequelize, DataTypes } = require("sequelize");
 
+// const connectionString = process.env.DATABASE_URL;
+// const sequelize = new Sequelize(connectionString, {
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false, // Disables SSL certificate verification
+//     },
+//   },
+//   logging: false,
+// });
 const config = {
   host: "localhost",
   dialect: "postgres",
+  logging: false,
 };
 
 const sequelize = new Sequelize("user_db", "postgres", "fahim", config);
@@ -30,15 +43,25 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: 0,
     },
-    work_frequency: {
-      type: DataTypes.INTEGER,
+    work_frequency_reviewer: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    work_frequency_maker: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    work_frequency_checker: {
+      type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 0,
     },
   },
   {
     timestamps: false,
-    tableName: "user_info",
+    tableName: "employee_info",
     // Other model options
   }
 );
@@ -51,7 +74,7 @@ const Tasks = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    task_name: { type: DataTypes.STRING, allowNull: false },
+    task_type: { type: DataTypes.STRING, allowNull: false },
     assigned_to: {
       type: DataTypes.STRING,
       allowNull: false,
