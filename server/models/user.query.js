@@ -86,14 +86,6 @@ exports.updateTask = async (info) => {
   }
 };
 
-function assign_task(task_name, email) {
-  // const
-  return Tasks.update(
-    { assigned_to: email, assigned_by: "admin", status: "not done" },
-    { where: { task_name: task_name } }
-  );
-}
-
 ///////////////////////Task-Info table queries////////////////////////
 exports.postTaskInfo = async (info) => {
   try {
@@ -124,18 +116,64 @@ exports.getAllTaskInfo = async () => {
 };
 ////////algo//////
 ////////algo//////
-const threshold = 2; // in hours
+
+async function assign_task(task_id, email) {
+  try {
+    await Tasks.update(
+      { assigned_to: email, assigned_by: "admin", status: "reviewer" },
+      { where: { task_id: task_id } }
+    );
+    console.log(`Task ${task_id} assigned to ${email} successfully.`);
+  } catch (error) {
+    console.error(`Error assigning task ${task_id} to ${email}:`, error);
+  }
+}
+
+async function updateTaskInfo(task_id, email) {
+  try {
+    await TaskInfo.update(
+      { status: "reviewer", assigned_to: email },
+      { where: { task_id: task_id } }
+    );
+    console.log(
+      `TaskInfo updated for task ${task_id} with assigned_to ${email}`
+    );
+  } catch (error) {
+    console.error(`Error updating TaskInfo for task ${task_id}:`, error);
+  }
+}
+
+const threshold = 4; // in hours
 
 async function distributeTasks() {
   try {
     const employees = await User.findAll({
-      where: { role: ["reviewer"] },
+      where: { role: "reviewer", personal_tasks: 0 }, // Fetch only employees with no personal tasks
     });
-    const tasks = await Tasks.findAll({});
 
-    for (let i = 0; i < employees.length; i++) {}
+    for (let i = 0; i < employees.length; i++) {
+      const tasks = await Tasks.findAll({
+        where: {
+          assigned_to: "null",
+          task_type: "personal",
+          status: "pending",
+        },
+      });
+
+      for (let j = 0; j < tasks.length; j++) {
+        if (employees[i].personal_tasks < threshold) {
+          await assign_task(tasks[j].task_id, employees[i].email);
+          await updateTaskInfo(tasks[j].task_id, employees[i].email);
+          employees[i].personal_tasks++; // Increment personal_tasks for the employee
+        }
+      }
+
+      await employees[i].save(); // Save changes for the employee
+    }
+
+    console.log("Tasks distributed successfully.");
   } catch (error) {
-    console.log(error);
+    console.error("Error distributing tasks:", error);
   }
 }
 
